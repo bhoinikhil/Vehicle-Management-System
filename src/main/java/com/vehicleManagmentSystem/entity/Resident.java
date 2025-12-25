@@ -1,6 +1,7 @@
 package com.vehicleManagmentSystem.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,19 +19,23 @@ public class Resident {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String fName;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String lName;
 
-    @Column(nullable = false)
+    @NotNull
     private String flatNo;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Mobile number is required")
+    @Pattern(
+            regexp = "^[6-9]\\d{9}$",
+            message = "Invalid mobile number"
+    )
     private long mobileNo;
 
-    @Column(nullable = false)
+    @Email(message = "Invalid Emali")
     private String email;
 
     @Enumerated(EnumType.STRING)

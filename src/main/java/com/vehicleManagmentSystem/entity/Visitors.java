@@ -1,6 +1,9 @@
 package com.vehicleManagmentSystem.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,9 +20,18 @@ public class Visitors {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotEmpty
     private String visitorName;
+    @NotEmpty
     private String vehicleName;
+    @NotBlank(message = "Vehicle number is required")
+
+    @Pattern(
+            regexp = "^[A-Z]{2}\\d{2}[A-Z]{2}\\d{4}$",
+            message = "Invalid vehicle number format (e.g., MH19CB1234)"
+    )
     private String vehicleRegisterationNumber;
+
     private String visitPurpose;
 
     @Column(name = "timeIn")
@@ -28,8 +40,14 @@ public class Visitors {
     @Column(name = "timeOut")
     private LocalDateTime timeOut;
 
+    @NotBlank(message = "Mobile number is required")
+    @Pattern(
+            regexp = "^[6-9]\\d{9}$",
+            message = "Invalid mobile number"
+    )
     private Long phoneNumber;
 
+    @NotEmpty
     private boolean isActiveVisitor;
 
     @Enumerated(EnumType.STRING)

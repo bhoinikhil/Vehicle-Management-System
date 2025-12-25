@@ -1,6 +1,8 @@
 package com.vehicleManagmentSystem.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,16 +19,16 @@ public class Vehical {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "Enter RegisterationNumber")
     private String registerationNumber;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String vName;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String color;
 
-    @Column(nullable = false)
+    @NotEmpty
     @Enumerated(EnumType.STRING)
     private Type type;
 
@@ -36,7 +38,7 @@ public class Vehical {
     @Column(name = "association_deactivated_at")
     private LocalDateTime associationDeactivatedAt;
 
-    @Column(nullable = false)
+    @NotEmpty
     private boolean isVehicleActive;
 
     @ManyToOne(fetch = FetchType.LAZY)
