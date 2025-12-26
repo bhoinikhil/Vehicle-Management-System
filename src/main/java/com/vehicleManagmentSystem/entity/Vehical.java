@@ -1,11 +1,13 @@
 package com.vehicleManagmentSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -17,32 +19,34 @@ import java.util.Date;
 public class Vehical {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  // id not showing user
     private long id;
 
     @NotEmpty(message = "Enter RegisterationNumber")
     private String registerationNumber;
 
-    @NotEmpty
+    @NotEmpty(message = "Please enter Vehical ")
     private String vName;
 
-    @NotEmpty
+    @NotEmpty(message = "Please Enter vehical color")
     private String color;
 
-    @NotEmpty
     @Enumerated(EnumType.STRING)
     private Type type;
 
     @Column(name = "association_activated_at")
+    @JsonIgnore
+    @CreatedDate
     private LocalDateTime associationActivatedAt;
 
     @Column(name = "association_deactivated_at")
     private LocalDateTime associationDeactivatedAt;
 
-    @NotEmpty
-    private boolean isVehicleActive;
+    private boolean VehicleActive;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne( )
     @JoinColumn(name = "resident_id")
+    @JsonIgnore
     private Resident resident;
 
 
