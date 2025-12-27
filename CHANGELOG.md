@@ -1,7 +1,10 @@
          # Changelog
 
 All notable changes to this project will be documented in this file.
-
+---
+## [1.3.0]  - 2025-12-27
+### Added
+- Implemented API Send list of residient to user.
 ---
 ## [1.2.0]  - 2025-12-27
 ### Added
