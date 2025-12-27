@@ -1,5 +1,6 @@
 package com.vehicleManagmentSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -53,6 +54,7 @@ public class Visitors {
     @Enumerated(EnumType.STRING)
     private VisitorType visitorType;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resident_id")
     private Resident resident;

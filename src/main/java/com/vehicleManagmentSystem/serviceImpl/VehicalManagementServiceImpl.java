@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class VehicalManagementServiceImpl implements VehicalManagementService {
@@ -18,6 +19,7 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
     VehicalRepository vehicalRepository;
 
 
+    // this method save resident.
     @Override
     public Resident addResident(Resident resident) {
         // adding FK inside Vehicle table
@@ -35,5 +37,12 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
         });
         Resident residentFromDb= residentRepository.save(resident);  // save resident
         return residentFromDb;
+    }
+
+    // this method send the list of resident to user.
+    @Override
+    public List<Resident> getAllResidents() {
+        List<Resident> residentList = residentRepository.findAll();
+        return residentList;
     }
 }

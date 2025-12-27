@@ -1,5 +1,6 @@
 package com.vehicleManagmentSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -43,17 +44,19 @@ public class Resident {
     @Enumerated(EnumType.STRING)
     private ResidentType residentType;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "resident",cascade = CascadeType.ALL)
     private List<Vehical> vehicalList = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "resident", cascade = CascadeType.ALL)
-    private ArrayList<Visitors> visitorList;
+    private List<Visitors> visitorsList = new ArrayList<>();
 
-//    resident-vehicle one to many ->
+//    resident(parent) -vehicle(child) one to many ->
 //        resident own the multiple vehicles.
 //        vehicle is the owining side because it contains the foreign key of resident
 
-//    Resident-Visitor one to many ->
+//    Resident(parent)-Visitor(Child) one to many ->
 //        visitor is owining side.
 
 }

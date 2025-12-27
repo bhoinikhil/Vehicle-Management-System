@@ -1,5 +1,6 @@
 package com.vehicleManagmentSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -45,8 +46,10 @@ public class Vehical {
     private boolean VehicleActive;
 
     @ManyToOne( )
+//    @ToString.Exclude
     @JoinColumn(name = "resident_id")
     @JsonIgnore
+    @JsonBackReference
     private Resident resident;
 
 
