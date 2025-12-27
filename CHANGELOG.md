@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 ---
+## [1.2.0]  - 2025-12-27
+### Added
+- Implimented starter-validation dependency to validate user inputs.
+- Implimented Swagger dependency to maintain documentation of all API's
+
+
+---
 ## [1.1.0]  - 2025-12-24
 ### Added
 - Implemented JPA Entities for the Vehicle Management System
