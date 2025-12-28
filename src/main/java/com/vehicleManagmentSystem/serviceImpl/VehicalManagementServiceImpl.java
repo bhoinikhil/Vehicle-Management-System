@@ -1,11 +1,13 @@
 package com.vehicleManagmentSystem.serviceImpl;
 
 import com.vehicleManagmentSystem.entity.Resident;
+import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
 import com.vehicleManagmentSystem.repository.ResidentRepository;
 import com.vehicleManagmentSystem.repository.VehicalRepository;
 import com.vehicleManagmentSystem.service.VehicalManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,5 +46,17 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
     public List<Resident> getAllResidents() {
         List<Resident> residentList = residentRepository.findAll();
         return residentList;
+    }
+
+    @Override
+    public Resident getResidentByName( String fname, String lname) {
+        Resident result = residentRepository.getResidentByFnameAndLname(fname ,lname);
+        if(result!=null){
+            return result;
+        }
+        else {
+            throw new UserNotFoundByException("User not found with this field "+ fname + " and "+ lname);
+        }
+
     }
 }

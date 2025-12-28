@@ -2,14 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 ---
+## [1.4.0]  - 2025-12-28
+### Added
+- Implemented API find resident by name.
+- Validation applied on user inputs and send proper message.
+---
 ## [1.3.0]  - 2025-12-27
 ### Added
 - Implemented API Send list of residient to user.
 ---
 ## [1.2.0]  - 2025-12-27
 ### Added
-- Implimented starter-validation dependency to validate user inputs.
-- Implimented Swagger dependency to maintain documentation of all API's
+- Implemented starter-validation dependency to validate user inputs.
+- Implemented Swagger dependency to maintain documentation of all API's
 
 
 ---
@@ -18,7 +23,7 @@ All notable changes to this project will be documented in this file.
 - Implemented JPA Entities for the Vehicle Management System
 - Entites like Resident,Vehicle and Visitor
 - Defined database mappings and entity relationships.
-- Implimented Lombok Dependency to avoid traditional Getters and Setters
+- Implemented Lombok Dependency to avoid traditional Getters and Setters
 
 ---
 ## [0.1.0] - 2024-12-22
