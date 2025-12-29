@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,8 +42,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleNotReadable(HttpMessageNotReadableException ex) {
-
         String errorMessage = "Please Enter valid Mobile No., Resident Type and Vehicle Type ";
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    // This exception handle user not found exception.
+    @ExceptionHandler(UserNotFoundByException.class)
+    public ResponseEntity<String> handleUserNotFoundByException(UserNotFoundByException userNotFoundByException){
+        String errorMessage = userNotFoundByException.getMessage();
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    //This method handle Empty inputs from user.
+    @ExceptionHandler(InvalidParameterException.class)
+    public ResponseEntity<String> handleInvalidParameterException(InvalidParameterException invalidParameterException){
+        String errorMessage = invalidParameterException.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
