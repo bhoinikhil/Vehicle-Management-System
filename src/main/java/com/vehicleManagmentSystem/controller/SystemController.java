@@ -1,19 +1,13 @@
 package com.vehicleManagmentSystem.controller;
-
 import com.vehicleManagmentSystem.entity.Resident;
-import com.vehicleManagmentSystem.entity.Vehical;
+import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
 import com.vehicleManagmentSystem.service.VehicalManagementService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,25 +22,28 @@ public class SystemController {
         return new ResponseEntity<>(residentFromDb, HttpStatus.CREATED);
     }
 
-    //This API send list of resident.
+    //This API send list of All resident.
     @GetMapping("/getAllResident" )
     ResponseEntity<List<Resident>> getAllResident(){
         List<Resident> residentList =vehicalManagementService.getAllResidents();
         return new ResponseEntity<>(residentList, HttpStatus.FOUND);
     }
 
-    //This method Find resident from first name and last name.
+
+    // This API send Resident list to user find by options like firstname ,lastname and both.
     @GetMapping("/getByfnamelname")
-    ResponseEntity<Resident> getResidentByFnameandLname(String fname,String lname) throws InvalidParameterException {
-        if (fname.isBlank() || lname.isBlank()){
-            throw new InvalidParameterException("fname and lname cannot be empty");
-        }else {
-            Resident result = vehicalManagementService.getResidentByName(fname,lname);
-            return new ResponseEntity<>(result, HttpStatus.FOUND);
-        }
-
+    ResponseEntity<List<Resident>> getResidentByFnameandLname(@RequestParam(required = false) String fname,@RequestParam(required = false) String lname){
+       if (( fname == null || fname.trim().isEmpty()) && (lname == null || lname.trim().isEmpty())){
+           //This condition validate the user input like notnull,empty, etc.
+           throw new InvalidParameterException("First Name or Last Name Required !!");
+       }
+           List<Resident> listUser = vehicalManagementService.getByName(fname!=null?fname.trim():fname, lname!=null?lname.trim():lname);
+           if (listUser.isEmpty()){ // this condition check data from database is null or empty
+               throw new UserNotFoundByException("User not found With the name "+fname +" "+lname);
+               //if data is null or empty the throw exception.
+           }
+       return new ResponseEntity<>(listUser, HttpStatus.FOUND);
     }
-
 
 
 }

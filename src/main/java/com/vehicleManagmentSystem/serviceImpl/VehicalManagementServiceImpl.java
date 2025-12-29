@@ -48,15 +48,10 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
         return residentList;
     }
 
-    @Override
-    public Resident getResidentByName( String fname, String lname) {
-        Resident result = residentRepository.getResidentByFnameAndLname(fname ,lname);
-        if(result!=null){
-            return result;
-        }
-        else {
-            throw new UserNotFoundByException("User not found with this field "+ fname + " and "+ lname);
-        }
 
+    @Override
+    public List<Resident> getByName(String fname, String lname) {
+        return residentRepository.findByName(fname,lname);
     }
+
 }

@@ -13,7 +13,6 @@ public interface VehicalManagementService {
     // This method give all resident list to the user.
      List<Resident> getAllResidents();
 
-    // This method give resident details by name.
-    Resident getResidentByName(String fname,String lname);
-
+     // This method gives list of Resident on the basis of input.
+    List<Resident> getByName(String fname, String lname);
 }
