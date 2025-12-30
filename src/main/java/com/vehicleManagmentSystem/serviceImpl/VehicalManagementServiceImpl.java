@@ -1,5 +1,6 @@
 package com.vehicleManagmentSystem.serviceImpl;
 
+import com.vehicleManagmentSystem.entity.ApiResidentByRegNo;
 import com.vehicleManagmentSystem.entity.Resident;
 import com.vehicleManagmentSystem.entity.Vehical;
 import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
@@ -8,6 +9,7 @@ import com.vehicleManagmentSystem.repository.VehicalRepository;
 import com.vehicleManagmentSystem.service.VehicalManagementService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.security.InvalidParameterException;
@@ -77,5 +79,23 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
         return updatedVehical;
     }
 
+    @Autowired
+    ApiResidentByRegNo residentByReg;
 
+    @Override
+    public ApiResidentByRegNo getResidentByRegistrationNumber(String registrationNumber) {
+        Resident resident = vehicalRepository.findByRegistrationNumber(registrationNumber);
+        if (resident == null){
+            throw new UserNotFoundByException("User Not Found with this Registration Number: " + registrationNumber);
+        }
+        //Adding resident data to object and send this object as response to user.
+        residentByReg.setFirstName(resident.getFName());
+        residentByReg.setLastName(resident.getLName());
+        residentByReg.setEmail(resident.getEmail());
+        residentByReg.setMobileNo(resident.getMobileNo());
+        residentByReg.setFlatNo(resident.getFlatNo());
+
+
+        return residentByReg;
+    }
 }

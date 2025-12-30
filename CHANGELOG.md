@@ -2,10 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 ---
-## [1.5.0]   - 2025-12-30
+## [1.6.0]   - 2025-12-30
+### Added
+- Implemented API find user details by using vehical registration number.
+
+---
+## [1.5.0]   - 2025-12-29
 ### Added
 - Implemented API creation of new vehicle.
-- Validation applied on user inputs like email and user not send empty or wrong Registration no.
+- Validation applied on user inputs like email and user not send empty or wrong registration number
 --- 
 ## [1.4.0]  - 2025-12-28
 ### Added

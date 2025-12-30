@@ -1,18 +1,24 @@
 package com.vehicleManagmentSystem.controller;
+import com.vehicleManagmentSystem.entity.ApiResidentByRegNo;
 import com.vehicleManagmentSystem.entity.Resident;
 import com.vehicleManagmentSystem.entity.Vehical;
 import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
 import com.vehicleManagmentSystem.service.VehicalManagementService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.security.InvalidParameterException;
 import java.util.List;
 
 @RestController
+@Validated
 public class SystemController {
     @Autowired
     VehicalManagementService vehicalManagementService;
@@ -47,9 +53,20 @@ public class SystemController {
     }
 
     @PutMapping("/addVehicle")
-    ResponseEntity<Vehical> addVehicle(@Valid @RequestBody Vehical vehical, @RequestParam String email){
+    ResponseEntity<Vehical> addVehicle(@Valid @RequestBody Vehical vehical, @RequestParam @NotEmpty(message = "Email Id is required") @Email(message = "Invalid email format") String email){
         Vehical vehicalFromDb = vehicalManagementService.addVehicle(vehical,email);
         return new ResponseEntity<>(vehicalFromDb, HttpStatus.CREATED);
     }
 
+    @GetMapping("/getResidentByRegNo")
+    ResponseEntity<ApiResidentByRegNo> getResidentByRegistrationNumber
+            (@RequestParam
+             @NotEmpty(message = "Registration number is required")
+             @Pattern(regexp= "^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$",message = "Invalid registration number format (e.g. MH19CB1234)")
+             String registrationNumber)
+    {
+
+       ApiResidentByRegNo residentFromDb = vehicalManagementService.getResidentByRegistrationNumber(registrationNumber);
+       return new ResponseEntity<>(residentFromDb, HttpStatus.FOUND);
+    }
 }
