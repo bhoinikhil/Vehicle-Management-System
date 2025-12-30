@@ -1,8 +1,10 @@
 package com.vehicleManagmentSystem.controller;
 import com.vehicleManagmentSystem.entity.Resident;
+import com.vehicleManagmentSystem.entity.Vehical;
 import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
 import com.vehicleManagmentSystem.service.VehicalManagementService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,6 @@ public class SystemController {
         return new ResponseEntity<>(residentList, HttpStatus.FOUND);
     }
 
-
     // This API send Resident list to user find by options like firstname ,lastname and both.
     @GetMapping("/getByfnamelname")
     ResponseEntity<List<Resident>> getResidentByFnameandLname(@RequestParam(required = false) String fname,@RequestParam(required = false) String lname){
@@ -45,5 +46,10 @@ public class SystemController {
        return new ResponseEntity<>(listUser, HttpStatus.FOUND);
     }
 
+    @PutMapping("/addVehicle")
+    ResponseEntity<Vehical> addVehicle(@Valid @RequestBody Vehical vehical, @RequestParam String email){
+        Vehical vehicalFromDb = vehicalManagementService.addVehicle(vehical,email);
+        return new ResponseEntity<>(vehicalFromDb, HttpStatus.CREATED);
+    }
 
 }

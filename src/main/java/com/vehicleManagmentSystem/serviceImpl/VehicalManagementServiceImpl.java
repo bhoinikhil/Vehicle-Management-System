@@ -1,14 +1,16 @@
 package com.vehicleManagmentSystem.serviceImpl;
 
 import com.vehicleManagmentSystem.entity.Resident;
+import com.vehicleManagmentSystem.entity.Vehical;
 import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
 import com.vehicleManagmentSystem.repository.ResidentRepository;
 import com.vehicleManagmentSystem.repository.VehicalRepository;
 import com.vehicleManagmentSystem.service.VehicalManagementService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,13 +47,35 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
     @Override
     public List<Resident> getAllResidents() {
         List<Resident> residentList = residentRepository.findAll();
+                if(residentList.isEmpty()){
+                    throw new UserNotFoundByException("User Not Found");
+                }
         return residentList;
     }
-
 
     @Override
     public List<Resident> getByName(String fname, String lname) {
         return residentRepository.findByName(fname,lname);
     }
+
+    @Transactional
+    @Override
+    public Vehical addVehicle(Vehical vehical, String email) {
+        if (vehical== null){
+            throw new InvalidParameterException("Empty Vehicle is not allowed");
+        }else if (email.isEmpty()){
+            throw new InvalidParameterException("Empty Email is not allowed");
+        }
+        Resident resident = residentRepository.findByEmail(email);
+        if (vehical.isVehicleActive()){
+            vehical.setAssociationActivatedAt(LocalDateTime.now());
+        }
+        vehical.setResident(resident);
+        resident.getVehicalList().add(vehical);
+        Resident residentFromDb =  residentRepository.save(resident);
+        Vehical updatedVehical = residentFromDb.getVehicalList().get(residentFromDb.getVehicalList().size()-1);
+        return updatedVehical;
+    }
+
 
 }

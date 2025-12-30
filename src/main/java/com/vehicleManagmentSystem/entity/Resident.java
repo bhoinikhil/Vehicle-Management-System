@@ -1,5 +1,6 @@
 package com.vehicleManagmentSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;
@@ -8,7 +9,6 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.lang.model.type.UnionType;
 import java.util.ArrayList;
@@ -22,7 +22,8 @@ import java.util.List;
 public class Resident {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // not showing user
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // not showing user
+    @JsonIgnore
     private int id;
 
     @NotEmpty(message = "Please enter Name !!")
