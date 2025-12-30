@@ -15,11 +15,16 @@ public interface ResidentRepository extends JpaRepository<Resident,Integer > {
     //JPQL query for find by option firstName or lastName or Both.
     @Query(" SELECT r FROM Resident r WHERE (:firstName IS NULL OR r.fName = :firstName) AND (:lastName IS NULL OR r.lName= :lastName)")
     List<Resident> findByName(@Param("firstName") String firstName, @Param("lastName") String lastName);
-}
 
+    @Query("SELECT r FROM Resident r WHERE r.email=:email")
+    Resident findByEmail(@Param("email") String email);
+
+
+}
 
 // (:firstName IS NULL OR r.fName = :firstName) says that
 // firstName = user input. and fName = entity field name.
 // If firstName is NULL, don’t check first name
 //  OR
 // If firstName is NOT NULL, match it with r.fName
+

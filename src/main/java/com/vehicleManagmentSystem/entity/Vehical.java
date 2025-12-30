@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,6 +25,7 @@ public class Vehical {
     private long id;
 
     @NotEmpty(message = "Enter RegisterationNumber")
+    @Pattern(regexp = "^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{4}$" , message = "Invalid formate Expected format like MH19AB1234")
     private String registerationNumber;
 
     @NotEmpty(message = "Please enter Vehical ")
