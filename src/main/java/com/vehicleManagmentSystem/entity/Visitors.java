@@ -45,7 +45,6 @@ public class Visitors {
     @Column(name = "timeOut")
     private LocalDateTime timeOut;
 
-
     @NotNull(message = "Mobile number is required ")
     private long phoneNumber;
 
@@ -55,8 +54,9 @@ public class Visitors {
     private VisitorType visitorType;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "resident_id")
+    @JsonIgnore
     private Resident resident;
 
 

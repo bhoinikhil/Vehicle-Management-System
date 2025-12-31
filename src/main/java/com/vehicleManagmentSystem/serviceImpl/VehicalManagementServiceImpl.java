@@ -1,18 +1,14 @@
 package com.vehicleManagmentSystem.serviceImpl;
 
-import com.vehicleManagmentSystem.entity.ApiResidentByRegNo;
-import com.vehicleManagmentSystem.entity.Resident;
-import com.vehicleManagmentSystem.entity.Vehical;
-import com.vehicleManagmentSystem.entity.Visitors;
+import com.vehicleManagmentSystem.entity.*;
 import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
 import com.vehicleManagmentSystem.repository.ResidentRepository;
 import com.vehicleManagmentSystem.repository.VehicalRepository;
+import com.vehicleManagmentSystem.repository.VisitorRepository;
 import com.vehicleManagmentSystem.service.VehicalManagementService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-
 import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,10 +17,10 @@ import java.util.List;
 public class VehicalManagementServiceImpl implements VehicalManagementService {
     @Autowired
     ResidentRepository residentRepository;
-
     @Autowired
     VehicalRepository vehicalRepository;
-
+    @Autowired
+    VisitorRepository visitorRepository;
 
     // this method save resident.
     @Override
@@ -111,5 +107,29 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
         resident.addVistior(visitor);
         residentRepository.save(resident);
         return visitor;
+    }
+
+    @Autowired
+    ApiVisitorByRegNo visitorApi;
+    @Override
+    public ApiVisitorByRegNo getVisitorByRegistrationNumber(String registrationNumber) {
+       Visitors visitor = visitorRepository.getVisitorByRegNo(registrationNumber);
+       if (visitor == null){
+           throw new UserNotFoundByException("User Not Found with this Registration Number: " + registrationNumber);
+       }
+        //Adding Data to custom object
+        visitorApi.setVisitorName(visitor.getVisitorName());
+        visitorApi.setVisitorMobileNo(visitor.getPhoneNumber());
+        visitorApi.setVisitPurpose(visitor.getVisitPurpose());
+        visitorApi.setVehicalName(visitor.getVehicleName());
+        visitorApi.setTimeIn(visitor.getTimeIn());
+
+        visitorApi.setResidentFirstName(visitor.getResident().getFName());
+        visitorApi.setResidentLastName(visitor.getResident().getLName());
+        visitorApi.setResidentEmail(visitor.getResident().getEmail());
+        visitorApi.setResidentMobileNo(visitor.getPhoneNumber());
+        visitorApi.setResidentFlatNo(visitor.getResident().getFlatNo());
+
+        return visitorApi;
     }
 }
