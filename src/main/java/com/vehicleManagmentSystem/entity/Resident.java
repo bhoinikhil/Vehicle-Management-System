@@ -53,6 +53,12 @@ public class Resident {
     @OneToMany(mappedBy = "resident", cascade = CascadeType.ALL)
     private List<Visitors> visitorsList = new ArrayList<>();
 
+    //Helper method to save visitor.
+    public void addVistior(Visitors visitor){
+        visitorsList.add(visitor);
+        visitor.setResident(this);
+    }
+
 //    resident(parent) -vehicle(child) one to many ->
 //        resident own the multiple vehicles.
 //        vehicle is the owining side because it contains the foreign key of resident

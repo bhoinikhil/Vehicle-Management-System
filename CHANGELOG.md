@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 ---
+## [2.0.0]   - 2025-12-30
+### Added
+- Implemented POST-API add new visitor details.
+---
 ## [1.6.0]   - 2025-12-30
 ### Added
 - Implemented API find user details by using vehical registration number.
