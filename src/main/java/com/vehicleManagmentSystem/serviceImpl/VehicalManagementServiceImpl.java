@@ -3,6 +3,7 @@ package com.vehicleManagmentSystem.serviceImpl;
 import com.vehicleManagmentSystem.entity.ApiResidentByRegNo;
 import com.vehicleManagmentSystem.entity.Resident;
 import com.vehicleManagmentSystem.entity.Vehical;
+import com.vehicleManagmentSystem.entity.Visitors;
 import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
 import com.vehicleManagmentSystem.repository.ResidentRepository;
 import com.vehicleManagmentSystem.repository.VehicalRepository;
@@ -97,5 +98,18 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
 
 
         return residentByReg;
+    }
+
+    @Override
+    public Visitors addVisitor(Visitors visitor, String email) {
+        Resident resident = residentRepository.findByEmail(email);
+        if (resident == null){
+            throw new UserNotFoundByException("User Not Found with this Email: " + email);
+        }
+        visitor.setActiveVisitor(true);
+        visitor.setTimeIn(LocalDateTime.now());
+        resident.addVistior(visitor);
+        residentRepository.save(resident);
+        return visitor;
     }
 }

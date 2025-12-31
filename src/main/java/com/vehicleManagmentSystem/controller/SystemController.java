@@ -2,11 +2,12 @@ package com.vehicleManagmentSystem.controller;
 import com.vehicleManagmentSystem.entity.ApiResidentByRegNo;
 import com.vehicleManagmentSystem.entity.Resident;
 import com.vehicleManagmentSystem.entity.Vehical;
+import com.vehicleManagmentSystem.entity.Visitors;
 import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
 import com.vehicleManagmentSystem.service.VehicalManagementService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,4 +70,13 @@ public class SystemController {
        ApiResidentByRegNo residentFromDb = vehicalManagementService.getResidentByRegistrationNumber(registrationNumber);
        return new ResponseEntity<>(residentFromDb, HttpStatus.FOUND);
     }
+
+    @Transactional
+    @PostMapping("/addVisitor")
+    ResponseEntity<Visitors> addVisitor(@RequestBody Visitors visitor, @RequestParam @NotEmpty(message = "Email Id is required") @Email(message = "Invalid email format") String email){
+         Visitors visitorFromDb = vehicalManagementService.addVisitor(visitor,email);
+         return new ResponseEntity<>(visitorFromDb, HttpStatus.CREATED);
+    }
+
+
 }
