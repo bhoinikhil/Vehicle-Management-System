@@ -16,12 +16,18 @@ public interface VehicalManagementService {
      // This method gives list of Resident on the basis of input.
     List<Resident> getByName(String fname, String lname);
 
+    //This method add vehical in resident.
     @Transactional
     Vehical addVehicle(Vehical vehical, String email);
 
+    //This method give details by using registrationNumber.
     ApiResidentByRegNo getResidentByRegistrationNumber(String registrationNumber);
 
+    //This method add visitor.
     Visitors addVisitor(Visitors visitors, String email);
 
     ApiVisitorByRegNo getVisitorByRegistrationNumber(String registrationNumber);
+    String updateVisitorByRegistrationNumber(String registrationNumber);
+
+
 }

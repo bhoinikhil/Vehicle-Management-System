@@ -132,4 +132,20 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
 
         return visitorApi;
     }
+
+    @Override
+    public String updateVisitorByRegistrationNumber(String registrationNumber) {
+        Visitors visitor = visitorRepository.getVisitorByRegNo(registrationNumber);
+        if (visitor == null){
+            throw new UserNotFoundByException("User Not Found with this Registration Number: " + registrationNumber);
+        } else if(visitor.getTimeOut() != null){
+            return "Visitor already CheckedOut";
+        }else {
+            visitor.setTimeOut(LocalDateTime.now());
+            visitor.setActiveVisitor(false);
+            visitorRepository.save(visitor);
+            return "Visitor CheckedOut Successfully";
+        }
+
+    }
 }
