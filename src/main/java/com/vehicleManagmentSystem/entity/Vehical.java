@@ -47,8 +47,7 @@ public class Vehical {
 
     private boolean VehicleActive;
 
-    @ManyToOne( )
-//    @ToString.Exclude
+    @ManyToOne()
     @JoinColumn(name = "resident_id")
     @JsonIgnore
     @JsonBackReference

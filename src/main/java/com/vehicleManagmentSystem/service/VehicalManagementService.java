@@ -1,10 +1,7 @@
 package com.vehicleManagmentSystem.service;
 
 
-import com.vehicleManagmentSystem.entity.ApiResidentByRegNo;
-import com.vehicleManagmentSystem.entity.Resident;
-import com.vehicleManagmentSystem.entity.Vehical;
-import com.vehicleManagmentSystem.entity.Visitors;
+import com.vehicleManagmentSystem.entity.*;
 import jakarta.transaction.Transactional;
 import java.util.List;
 
@@ -26,4 +23,5 @@ public interface VehicalManagementService {
 
     Visitors addVisitor(Visitors visitors, String email);
 
+    ApiVisitorByRegNo getVisitorByRegistrationNumber(String registrationNumber);
 }

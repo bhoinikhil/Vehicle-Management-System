@@ -1,8 +1,5 @@
 package com.vehicleManagmentSystem.controller;
-import com.vehicleManagmentSystem.entity.ApiResidentByRegNo;
-import com.vehicleManagmentSystem.entity.Resident;
-import com.vehicleManagmentSystem.entity.Vehical;
-import com.vehicleManagmentSystem.entity.Visitors;
+import com.vehicleManagmentSystem.entity.*;
 import com.vehicleManagmentSystem.entity.exception.UserNotFoundByException;
 import com.vehicleManagmentSystem.service.VehicalManagementService;
 import jakarta.transaction.Transactional;
@@ -78,5 +75,10 @@ public class SystemController {
          return new ResponseEntity<>(visitorFromDb, HttpStatus.CREATED);
     }
 
+    @GetMapping("/getVisitorByRegNo")
+    ResponseEntity<ApiVisitorByRegNo> getVisitorByRegistrationName(@RequestParam @NotEmpty(message = "Registration number is required") String registrationNumber){
+        ApiVisitorByRegNo visitorDetails = vehicalManagementService.getVisitorByRegistrationNumber(registrationNumber);
+        return new ResponseEntity<>(visitorDetails, HttpStatus.FOUND);
+    }
 
 }
