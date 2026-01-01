@@ -76,9 +76,27 @@ public class SystemController {
     }
 
     @GetMapping("/getVisitorByRegNo")
-    ResponseEntity<ApiVisitorByRegNo> getVisitorByRegistrationName(@RequestParam @NotEmpty(message = "Registration number is required") String registrationNumber){
+    ResponseEntity<ApiVisitorByRegNo> getVisitorByRegistrationName
+            (@RequestParam
+             @NotEmpty(message = "Registration number is required")
+             @Pattern(regexp = "^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{4}$",message = "Invalid formate Expected format like MH19AB1234")
+             String registrationNumber){
         ApiVisitorByRegNo visitorDetails = vehicalManagementService.getVisitorByRegistrationNumber(registrationNumber);
         return new ResponseEntity<>(visitorDetails, HttpStatus.FOUND);
     }
+
+    @PutMapping("/updateVisitorOutTime")
+    ResponseEntity<String> updateVisitorOutTime
+            (@RequestParam
+             @NotEmpty(message = "Registration number is required")
+             @Pattern(regexp = "^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{4}$",message = "Invalid formate Expected format like MH19AB1234")
+             String registrationNumber
+            )
+    {
+         String msg = vehicalManagementService.updateVisitorByRegistrationNumber(registrationNumber);
+         return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+
 
 }
