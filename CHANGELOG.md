@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 ---
+## [2.1.0]   - 2026-01-02
+### Added
+- Adding New Feature to give all active visitors in the Society.
+- Also give input filter search by GUEST or DILIVERY.
+---
 ## [2.1.0]   - 2026-01-01
 ### Added
 - Implemented CheckedOut feature for visitor.
