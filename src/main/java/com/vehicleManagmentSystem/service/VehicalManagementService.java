@@ -29,5 +29,7 @@ public interface VehicalManagementService {
     ApiVisitorByRegNo getVisitorByRegistrationNumber(String registrationNumber);
     String updateVisitorByRegistrationNumber(String registrationNumber);
 
+    List<Visitors> getListOfActiveVisitors(List<String> visitorTypes);
+
 
 }

@@ -148,4 +148,10 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
         }
 
     }
+
+    @Override
+    public List<Visitors> getListOfActiveVisitors(List<String> visitorsType) {
+        List<Visitors> visitorsList = visitorRepository.getListOfActiveVisitors(visitorsType);
+        return visitorsList;
+    }
 }
