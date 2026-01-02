@@ -11,7 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+
 
 @Entity
 @Getter
@@ -50,14 +52,19 @@ public class Visitors {
 
     private boolean isActiveVisitor;
 
+    private Duration visitDuration;
+
     @Enumerated(EnumType.STRING)
     private VisitorType visitorType;
 
-    @JsonBackReference
+
     @ManyToOne()
     @JoinColumn(name = "resident_id")
-    @JsonIgnore
+    @JsonBackReference
     private Resident resident;
 
+    public void calculateVisitDuration(LocalDateTime timeIn,LocalDateTime timeOut){
+        this.visitDuration = Duration.between(timeIn,timeOut);
+    }
 
 }

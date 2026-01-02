@@ -49,7 +49,6 @@ public class Vehical {
 
     @ManyToOne()
     @JoinColumn(name = "resident_id")
-    @JsonIgnore
     @JsonBackReference
     private Resident resident;
 

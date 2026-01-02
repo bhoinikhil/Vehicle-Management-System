@@ -27,6 +27,7 @@ public class ApiVisitorByRegNo {
     private LocalDateTime timeIn;
     private LocalDateTime timeOut;
     private String visitPurpose;
+    private String totalDurationVisit;
 
 
 
