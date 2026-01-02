@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.security.InvalidParameterException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -124,6 +125,18 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
         visitorApi.setVehicalName(visitor.getVehicleName());
         visitorApi.setTimeIn(visitor.getTimeIn());
 
+        if(visitor.getTimeOut()!=null){
+            visitorApi.setTimeOut(visitor.getTimeOut());
+            // this formate totalDuration and convert it duration to String.
+            Duration duration = visitor.getVisitDuration();
+            long minutes = duration.toMinutes();
+            long hours = minutes/60;
+            long day = hours/24;
+            String totalDuration = day +" days "+ hours%24 + " hours "+ minutes + " min";
+            visitorApi.setTotalDurationVisit(totalDuration);
+        }
+
+
         visitorApi.setResidentFirstName(visitor.getResident().getFName());
         visitorApi.setResidentLastName(visitor.getResident().getLName());
         visitorApi.setResidentEmail(visitor.getResident().getEmail());
@@ -132,6 +145,7 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
 
         return visitorApi;
     }
+
 
     @Override
     public String updateVisitorByRegistrationNumber(String registrationNumber) {
@@ -143,6 +157,8 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
         }else {
             visitor.setTimeOut(LocalDateTime.now());
             visitor.setActiveVisitor(false);
+            visitor.calculateVisitDuration(visitor.getTimeIn(),visitor.getTimeOut()); // this method calculate total visit time.
+
             visitorRepository.save(visitor);
             return "Visitor CheckedOut Successfully";
         }
@@ -152,6 +168,9 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
     @Override
     public List<Visitors> getListOfActiveVisitors(List<String> visitorsType) {
         List<Visitors> visitorsList = visitorRepository.getListOfActiveVisitors(visitorsType);
+        if(visitorsList.isEmpty()){
+            throw new UserNotFoundByException("There is no active Visitors. ");
+        }
         return visitorsList;
     }
 }
