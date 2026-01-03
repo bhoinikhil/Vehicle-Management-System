@@ -135,8 +135,6 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
             String totalDuration = day +" days "+ hours%24 + " hours "+ minutes + " min";
             visitorApi.setTotalDurationVisit(totalDuration);
         }
-
-
         visitorApi.setResidentFirstName(visitor.getResident().getFName());
         visitorApi.setResidentLastName(visitor.getResident().getLName());
         visitorApi.setResidentEmail(visitor.getResident().getEmail());
@@ -145,7 +143,6 @@ public class VehicalManagementServiceImpl implements VehicalManagementService {
 
         return visitorApi;
     }
-
 
     @Override
     public String updateVisitorByRegistrationNumber(String registrationNumber) {

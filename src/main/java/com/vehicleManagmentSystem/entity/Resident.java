@@ -54,6 +54,11 @@ public class Resident {
     private List<Visitors> visitorsList = new ArrayList<>();
 
     //Helper method to save visitor.
+    public void addVehical(Vehical vehical) {
+        vehicalList.add(vehical);
+        vehical.setResident(this);
+    }
+    //Helper method to save visitor.
     public void addVistior(Visitors visitor){
         visitorsList.add(visitor);
         visitor.setResident(this);

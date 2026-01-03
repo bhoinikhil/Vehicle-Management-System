@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 ---
+## [2.2.0]   - 2026-01-02
+### Added
+- Adding New Feature : Automated nightly backup of active visitor lists at 11:00 PM. 
+---
 ## [2.1.0]   - 2026-01-02
 ### Added
 - Adding new field Visitor visit duration. 
